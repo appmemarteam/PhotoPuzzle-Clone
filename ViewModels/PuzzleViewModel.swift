@@ -20,15 +20,28 @@ final class PuzzleViewModel {
     }
 
     func move(tile: PuzzleTile) {
-        guard PuzzleEngine.canMove(state, tile: tile) else { return }
+        guard PuzzleEngine.canMove(state, tile: tile) else { 
+            if SettingsStore.shared.hapticsEnabled {
+                HapticManager.shared.notification(type: .error)
+            }
+            return 
+        }
+        
         state = PuzzleEngine.move(state, tile: tile)
         moves += 1
+        
+        if SettingsStore.shared.hapticsEnabled {
+            HapticManager.shared.impact(style: .light)
+        }
         
         if PuzzleEngine.isSolved(state) {
             isSolved = true
             if let start = startTime {
                 solveTime = Date().timeIntervalSince(start)
                 GameCenterManager.shared.recordSolve(moves: moves, time: solveTime)
+                if SettingsStore.shared.hapticsEnabled {
+                    HapticManager.shared.notification(type: .success)
+                }
             }
         }
     }
