@@ -12,4 +12,11 @@ final class PuzzleViewModel {
         moves = 0
         isSolved = false
     }
+
+    func move(tile: PuzzleTile) {
+        guard PuzzleEngine.canMove(state, tile: tile) else { return }
+        state = PuzzleEngine.move(state, tile: tile)
+        moves += 1
+        isSolved = PuzzleEngine.isSolved(state)
+    }
 }

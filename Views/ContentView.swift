@@ -9,13 +9,24 @@ struct ContentView: View {
                 Text("Photo Puzzle+")
                     .font(.largeTitle.bold())
 
-                PuzzleGridView(state: viewModel.state)
-                    .frame(width: 300, height: 300)
+                PuzzleGridView(state: viewModel.state) { tile in
+                    viewModel.move(tile: tile)
+                }
+                .frame(width: 300, height: 300)
+
+                Text("Moves: \(viewModel.moves)")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
 
                 Button("New Puzzle") {
                     viewModel.newPuzzle(size: 3)
                 }
                 .buttonStyle(.borderedProminent)
+
+                if viewModel.isSolved {
+                    Text("Solved! 🎉")
+                        .font(.headline)
+                }
             }
             .padding()
             .navigationTitle("Puzzle")
