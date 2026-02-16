@@ -1,5 +1,7 @@
 import Foundation
 import Observation
+import Photos
+import UIKit
 
 @Observable
 final class PuzzleViewModel {

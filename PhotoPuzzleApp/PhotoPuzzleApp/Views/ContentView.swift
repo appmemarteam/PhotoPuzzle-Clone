@@ -1,4 +1,5 @@
 import SwiftUI
+import Photos
 
 struct ContentView: View {
     @State private var viewModel = PuzzleViewModel()
